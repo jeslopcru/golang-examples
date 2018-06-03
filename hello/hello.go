@@ -3,9 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(HelloWorld())
+	fmt.Println(HelloWorld("Jesús"))
 }
 
-func HelloWorld() string {
-	return "Hello, world"
+const HELLO = "Hello, "
+
+func HelloWorld(name string) string {
+	return HELLO + name
 }
