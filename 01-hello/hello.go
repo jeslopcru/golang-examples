@@ -1,10 +1,4 @@
-package main
-
-import "fmt"
-
-func main() {
-	fmt.Println(HelloWorld("Jesús"))
-}
+package hello
 
 const HELLO = "Hello, "
 
