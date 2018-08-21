@@ -10,14 +10,14 @@ func TestHelloWorld(t *testing.T) {
 			t.Errorf("got '%s' expected '%s'", got, expected)
 		}
 	}
-	t.Run("when say hello with a name then response is hello name", func(t *testing.T) {
+	t.Run("when say 01-hello with a name then response is 01-hello name", func(t *testing.T) {
 		expected := "Hello, Jesús"
 		got := HelloWorld("Jesús")
 
 		assertIsCorrectMessage(got, expected, t)
 	})
 
-	t.Run("when say hello with empty name then response is say hello world", func(t *testing.T) {
+	t.Run("when say 01-hello with empty name then response is say 01-hello world", func(t *testing.T) {
 		expected := "Hello, World"
 		got := HelloWorld("")
 
