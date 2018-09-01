@@ -3,8 +3,9 @@ package geometry
 import "testing"
 
 func TestArea(t *testing.T) {
-	got := Area(12.0, 6)
-	expected := 36.0
+	triangle := Triangle{4, 5, 3}
+	got := Area(triangle)
+	expected := 6.00
 
 	if got != expected {
 		t.Errorf("got %.2f expected %.2f", got, expected)
@@ -12,7 +13,8 @@ func TestArea(t *testing.T) {
 }
 
 func TestPerimeter(t *testing.T) {
-	got := Perimeter(12.0, 6, 6.0)
+	triangle := Triangle{12.0, 6, 6.0}
+	got := Perimeter(triangle)
 	expected := 24.0
 
 	if got != expected {
