@@ -4,23 +4,20 @@ import "testing"
 
 func TestArea(t *testing.T) {
 
+	assertArea := func(t *testing.T, shape Shape, want float64) {
+		t.Helper()
+		got := shape.Area()
+		if got != want {
+			t.Errorf("got %.2f want %.2f", got, want)
+		}
+	}
+
 	t.Run("triangle", func(t *testing.T) {
 		triangle := Triangle{4, 5, 3}
-		got := triangle.Area()
-		expected := 6.00
-
-		if got != expected {
-			t.Errorf("got %.2f expected %.2f", got, expected)
-		}
+		assertArea(t, triangle, 6.00)
 	})
-
-	t.Run("rectangle", func(t *testing.T) {
+	t.Run("rectangles", func(t *testing.T) {
 		rectangle := Rectangle{12, 6}
-		got := rectangle.Area()
-		expected := 72.0
-
-		if got != expected {
-			t.Errorf("got %.2f expected %.2f", got, expected)
-		}
+		assertArea(t, rectangle, 72.00)
 	})
 }
