@@ -17,6 +17,10 @@ type Rectangle struct {
 	b float64
 }
 
+type Circle struct {
+	radius float64
+}
+
 func (triangle Triangle) Area() float64 {
 	semiperimeter := (triangle.a + triangle.b + triangle.c) / 2
 	radicand := semiperimeter * (semiperimeter - triangle.a) * (semiperimeter - triangle.b) * (semiperimeter - triangle.c)
@@ -25,4 +29,8 @@ func (triangle Triangle) Area() float64 {
 
 func (rectangle Rectangle) Area() float64 {
 	return rectangle.a * rectangle.b
+}
+
+func (circle Circle) Area() float64 {
+	return circle.radius * circle.radius * math.Pi
 }
