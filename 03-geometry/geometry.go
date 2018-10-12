@@ -3,27 +3,27 @@ package geometry
 import "math"
 
 type Triangle struct {
-	a float64
-	b float64
-	c float64
+	SideA float64
+	SideB float64
+	SideC float64
 }
 
 func (triangle Triangle) Area() interface{} {
-	semiperimeter := (triangle.a + triangle.b + triangle.c) / 2
-	radicand := semiperimeter * (semiperimeter - triangle.a) * (semiperimeter - triangle.b) * (semiperimeter - triangle.c)
+	semiperimeter := (triangle.SideA + triangle.SideB + triangle.SideC) / 2
+	radicand := semiperimeter * (semiperimeter - triangle.SideA) * (semiperimeter - triangle.SideB) * (semiperimeter - triangle.SideC)
 	return math.Sqrt(radicand)
 }
 
 type Rectangle struct {
-	a float64
-	b float64
+	SideA float64
+	SideB float64
 }
 
 func (rectangle Rectangle) Area() interface{} {
-	return rectangle.a * rectangle.b
+	return rectangle.SideA * rectangle.SideB
 }
 
-// GIVEN three side of a triangle  WHEN call Perimeter function THEN result is the perimeter of a triangle
+// GIVEN three side of SideA triangle  WHEN call Perimeter function THEN result is the perimeter of SideA triangle
 func Perimeter(aTriangle Triangle) interface{} {
-	return aTriangle.a + aTriangle.b + aTriangle.c
+	return aTriangle.SideA + aTriangle.SideB + aTriangle.SideC
 }

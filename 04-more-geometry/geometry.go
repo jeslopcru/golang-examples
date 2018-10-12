@@ -7,30 +7,30 @@ type Shape interface {
 }
 
 type Triangle struct {
-	a float64
-	b float64
-	c float64
+	SideA float64
+	SideB float64
+	SideC float64
 }
 
 type Rectangle struct {
-	a float64
-	b float64
+	SideA float64
+	SideB float64
 }
 
 type Circle struct {
-	radius float64
+	Radius float64
 }
 
 func (triangle Triangle) Area() float64 {
-	semiperimeter := (triangle.a + triangle.b + triangle.c) / 2
-	radicand := semiperimeter * (semiperimeter - triangle.a) * (semiperimeter - triangle.b) * (semiperimeter - triangle.c)
+	semiperimeter := (triangle.SideA + triangle.SideB + triangle.SideC) / 2
+	radicand := semiperimeter * (semiperimeter - triangle.SideA) * (semiperimeter - triangle.SideB) * (semiperimeter - triangle.SideC)
 	return math.Sqrt(radicand)
 }
 
 func (rectangle Rectangle) Area() float64 {
-	return rectangle.a * rectangle.b
+	return rectangle.SideA * rectangle.SideB
 }
 
 func (circle Circle) Area() float64 {
-	return circle.radius * circle.radius * math.Pi
+	return circle.Radius * circle.Radius * math.Pi
 }
