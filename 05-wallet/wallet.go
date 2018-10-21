@@ -1,6 +1,9 @@
 package wallet
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Euro int
 
@@ -18,6 +21,10 @@ func (wallet *Wallet) Deposit(amount Euro) {
 func (wallet *Wallet) Balance() Euro {
 	return wallet.balance
 }
-func (wallet *Wallet) Withdraw(amount Euro) {
+func (wallet *Wallet) Withdraw(amount Euro) error {
+	if amount > wallet.balance {
+		return errors.New("not enough Euro")
+	}
 	wallet.balance -= amount
+	return nil
 }
