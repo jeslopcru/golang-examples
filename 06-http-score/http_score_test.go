@@ -1,6 +1,7 @@
 package http_score
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -8,16 +9,28 @@ import (
 
 func TestHttpScore(t *testing.T) {
 	t.Run("return Paco's score", func(t *testing.T) {
-		request, _ := http.NewRequest(http.MethodGet, "/players/Paco", nil)
 		response := httptest.NewRecorder()
+		PlayerServer(response, createNewRequest("Paco"))
 
-		PlayerServer(response, request)
+		assertResponseBody(t, "20", response.Body.String())
 
-		expected := "20"
-		result := response.Body.String()
-
-		if result != expected {
-			t.Errorf("result '%s', expected '%s'", result, expected)
-		}
 	})
+
+	t.Run("return Manolo's score", func(t *testing.T) {
+		response := httptest.NewRecorder()
+		PlayerServer(response, createNewRequest("Manolo"))
+
+		assertResponseBody(t, "35", response.Body.String())
+	})
+}
+
+func assertResponseBody(t *testing.T, expected string, result string) {
+	if result != expected {
+		t.Errorf("result '%s', expected '%s'", result, expected)
+	}
+}
+
+func createNewRequest(name string) *http.Request {
+	request, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("/players/%s", name), nil)
+	return request
 }

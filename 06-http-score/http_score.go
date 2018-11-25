@@ -6,5 +6,18 @@ import (
 )
 
 func PlayerServer(response http.ResponseWriter, request *http.Request) {
-	fmt.Fprint(response, "20")
+
+	player := request.URL.Path[len("/players/"):]
+	fmt.Fprint(response, ObtainPlayerScore(player))
+}
+
+func ObtainPlayerScore(name string) string {
+	if name == "Paco" {
+		return "20"
+	}
+
+	if name == "Manolo" {
+		return "35"
+	}
+	return ""
 }
