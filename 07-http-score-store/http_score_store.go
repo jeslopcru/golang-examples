@@ -5,19 +5,17 @@ import (
 	"net/http"
 )
 
-func PlayerServer(response http.ResponseWriter, request *http.Request) {
-
-	player := request.URL.Path[len("/players/"):]
-	fmt.Fprint(response, ObtainPlayerScore(player))
+// PlayerStore stores score information about players
+type PlayerStore interface {
+	ObtainPlayerScore(name string) int
 }
 
-func ObtainPlayerScore(name string) string {
-	if name == "Paco" {
-		return "20"
-	}
+// PlayerServer is a HTTP interface for player information
+type PlayerServer struct {
+	Store PlayerStore
+}
 
-	if name == "Manolo" {
-		return "35"
-	}
-	return ""
+func (p *PlayerServer) ServeHTTP(response http.ResponseWriter, request *http.Request) {
+	player := request.URL.Path[len("/players/"):]
+	fmt.Fprint(response, p.Store.ObtainPlayerScore(player))
 }
