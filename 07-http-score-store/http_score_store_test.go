@@ -31,6 +31,7 @@ func TestHttpScore(t *testing.T) {
 		request := createNewRequest("Paco")
 		server.ServeHTTP(response, request)
 
+		assertStatus(response.Code, http.StatusOK, t)
 		assertResponseBody(t, "20", response.Body.String())
 
 	})
@@ -40,6 +41,7 @@ func TestHttpScore(t *testing.T) {
 		request := createNewRequest("Manolo")
 		server.ServeHTTP(response, request)
 
+		assertStatus(response.Code, http.StatusOK, t)
 		assertResponseBody(t, "35", response.Body.String())
 	})
 
@@ -48,12 +50,14 @@ func TestHttpScore(t *testing.T) {
 		request := createNewRequest("Juan")
 		server.ServeHTTP(response, request)
 
-		expected := http.StatusNotFound
-		result := response.Code
-		if result != expected {
-			t.Errorf("status result '%d', status expected '%d'", result, expected)
-		}
+		assertStatus(response.Code, http.StatusNotFound, t)
 	})
+}
+
+func assertStatus(result int, expected int, t *testing.T) {
+	if result != expected {
+		t.Errorf("wrong stsatus status result '%d', status expected '%d'", result, expected)
+	}
 }
 
 func assertResponseBody(t *testing.T, expected string, result string) {
