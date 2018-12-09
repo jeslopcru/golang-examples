@@ -42,6 +42,18 @@ func TestHttpScore(t *testing.T) {
 
 		assertResponseBody(t, "35", response.Body.String())
 	})
+
+	t.Run("return 404 when not found a player", func(t *testing.T) {
+		response := httptest.NewRecorder()
+		request := createNewRequest("Juan")
+		server.ServeHTTP(response, request)
+
+		expected := http.StatusNotFound
+		result := response.Code
+		if result != expected {
+			t.Errorf("status result '%d', status expected '%d'", result, expected)
+		}
+	})
 }
 
 func assertResponseBody(t *testing.T, expected string, result string) {
