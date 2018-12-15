@@ -54,9 +54,26 @@ func TestHttpScore(t *testing.T) {
 	})
 }
 
+func TestStoreWins(t *testing.T) {
+	store := StubPlayerStore{
+		map[string]int{},
+	}
+	server := &PlayerServer{&store}
+
+	t.Run("it returns accepted on POST", func(t *testing.T) {
+		request, _ := http.NewRequest(http.MethodPost, "/players/Luis", nil)
+		response := httptest.NewRecorder()
+
+		server.ServeHTTP(response, request)
+
+		assertStatus(response.Code, http.StatusAccepted, t)
+
+	})
+}
+
 func assertStatus(result int, expected int, t *testing.T) {
 	if result != expected {
-		t.Errorf("wrong stsatus status result '%d', status expected '%d'", result, expected)
+		t.Errorf("wrong status status result '%d', status expected '%d'", result, expected)
 	}
 }
 
