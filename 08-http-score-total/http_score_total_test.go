@@ -33,7 +33,7 @@ func TestHttpScore(t *testing.T) {
 
 	t.Run("return Paco's score", func(t *testing.T) {
 		response := httptest.NewRecorder()
-		request := createNewRequest("Paco")
+		request := newGetScoreRequest("Paco")
 		server.ServeHTTP(response, request)
 
 		assertStatus(t, response.Code, http.StatusOK)
@@ -43,7 +43,7 @@ func TestHttpScore(t *testing.T) {
 
 	t.Run("return Manolo's score", func(t *testing.T) {
 		response := httptest.NewRecorder()
-		request := createNewRequest("Manolo")
+		request := newGetScoreRequest("Manolo")
 		server.ServeHTTP(response, request)
 
 		assertStatus(t, response.Code, http.StatusOK)
@@ -52,7 +52,7 @@ func TestHttpScore(t *testing.T) {
 
 	t.Run("return 404 when not found a player", func(t *testing.T) {
 		response := httptest.NewRecorder()
-		request := createNewRequest("Juan")
+		request := newGetScoreRequest("Juan")
 		server.ServeHTTP(response, request)
 
 		assertStatus(t, response.Code, http.StatusNotFound)
@@ -66,7 +66,8 @@ func TestStoreWins(t *testing.T) {
 	server := &PlayerServer{&store}
 
 	t.Run("it record a win when POST", func(t *testing.T) {
-		request, _ := http.NewRequest(http.MethodPost, "/players/Luis", nil)
+		player := "Luis"
+		request := newPostWinRequest(player)
 		response := httptest.NewRecorder()
 
 		server.ServeHTTP(response, request)
@@ -75,6 +76,10 @@ func TestStoreWins(t *testing.T) {
 
 		if len(store.winCalls) != 1 {
 			t.Errorf("got %d calls to RecordWin want %d", len(store.winCalls), 1)
+		}
+
+		if store.winCalls[0] != player {
+			t.Errorf("did not store correct winner got '%s' want '%s'", store.winCalls[0], player)
 		}
 	})
 }
@@ -91,7 +96,12 @@ func assertResponseBody(t *testing.T, expected string, result string) {
 	}
 }
 
-func createNewRequest(name string) *http.Request {
+func newGetScoreRequest(name string) *http.Request {
 	request, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("/players/%s", name), nil)
+	return request
+}
+
+func newPostWinRequest(name string) *http.Request {
+	request, _ := http.NewRequest(http.MethodPost, fmt.Sprintf("/players/%s", name), nil)
 	return request
 }
