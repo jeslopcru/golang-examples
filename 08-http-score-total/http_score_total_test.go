@@ -36,7 +36,7 @@ func TestHttpScore(t *testing.T) {
 		request := createNewRequest("Paco")
 		server.ServeHTTP(response, request)
 
-		assertStatus(response.Code, http.StatusOK, t)
+		assertStatus(t, response.Code, http.StatusOK)
 		assertResponseBody(t, "20", response.Body.String())
 
 	})
@@ -46,7 +46,7 @@ func TestHttpScore(t *testing.T) {
 		request := createNewRequest("Manolo")
 		server.ServeHTTP(response, request)
 
-		assertStatus(response.Code, http.StatusOK, t)
+		assertStatus(t, response.Code, http.StatusOK)
 		assertResponseBody(t, "35", response.Body.String())
 	})
 
@@ -55,7 +55,7 @@ func TestHttpScore(t *testing.T) {
 		request := createNewRequest("Juan")
 		server.ServeHTTP(response, request)
 
-		assertStatus(response.Code, http.StatusNotFound, t)
+		assertStatus(t, response.Code, http.StatusNotFound)
 	})
 }
 
@@ -71,7 +71,7 @@ func TestStoreWins(t *testing.T) {
 
 		server.ServeHTTP(response, request)
 
-		assertStatus(response.Code, http.StatusAccepted, t)
+		assertStatus(t, response.Code, http.StatusAccepted)
 
 		if len(store.winCalls) != 1 {
 			t.Errorf("got %d calls to RecordWin want %d", len(store.winCalls), 1)
@@ -79,7 +79,7 @@ func TestStoreWins(t *testing.T) {
 	})
 }
 
-func assertStatus(result int, expected int, t *testing.T) {
+func assertStatus(t *testing.T, result int, expected int) {
 	if result != expected {
 		t.Errorf("wrong status status result '%d', status expected '%d'", result, expected)
 	}

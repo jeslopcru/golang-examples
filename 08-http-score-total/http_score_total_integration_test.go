@@ -18,7 +18,7 @@ func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 
 	response := httptest.NewRecorder()
 	server.ServeHTTP(response, newGetScoreRequest(player))
-	assertStatus(response.Code, http.StatusOK, t)
+	assertStatus(t, response.Code, http.StatusOK)
 
 	assertResponseBody(t, "3", response.Body.String())
 }
