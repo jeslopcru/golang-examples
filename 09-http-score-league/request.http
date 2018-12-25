@@ -1,0 +1,7 @@
+GET  http://localhost:5000/player/jesus
+
+###
+
+POST  http://localhost:5000/player/jesus
+
+###
