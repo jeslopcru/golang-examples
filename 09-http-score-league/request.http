@@ -1,7 +1,12 @@
-GET  http://localhost:5000/player/jesus
+GET  http://localhost:5000/players/jesus
 
 ###
 
-POST  http://localhost:5000/player/jesus
+POST  http://localhost:5000/players/jesus
+
+###
+
+
+GET  http://localhost:5000/league
 
 ###
