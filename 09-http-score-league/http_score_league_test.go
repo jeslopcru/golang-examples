@@ -29,7 +29,7 @@ func TestHttpScore(t *testing.T) {
 			"Manolo": 35,
 		}, nil,
 	}
-	server := &PlayerServer{&store}
+	server := PlayerServerMaster(&store)
 
 	t.Run("return Paco's score", func(t *testing.T) {
 		response := httptest.NewRecorder()
@@ -63,7 +63,7 @@ func TestStoreWins(t *testing.T) {
 	store := StubPlayerStore{
 		map[string]int{}, nil,
 	}
-	server := &PlayerServer{&store}
+	server := PlayerServerMaster(&store)
 
 	t.Run("it record a win when POST", func(t *testing.T) {
 		player := "Luis"
@@ -79,7 +79,7 @@ func TestStoreWins(t *testing.T) {
 		}
 
 		if store.winCalls[0] != player {
-			t.Errorf("did not store correct winner got '%s' want '%s'", store.winCalls[0], player)
+			t.Errorf("did not Store correct winner got '%s' want '%s'", store.winCalls[0], player)
 		}
 	})
 }
@@ -108,7 +108,7 @@ func newPostWinRequest(name string) *http.Request {
 
 func TestLeague(t *testing.T) {
 	store := StubPlayerStore{}
-	server := &PlayerServer{&store}
+	server := PlayerServerMaster(&store)
 
 	t.Run("it returns 200 on /league", func(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodGet, "/league", nil)
