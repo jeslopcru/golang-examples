@@ -12,26 +12,23 @@ type PlayerStore interface {
 }
 
 // PlayerServer is a HTTP interface for player information
-
 type PlayerServer struct {
-	store  PlayerStore
-	router *http.ServeMux
+	store PlayerStore
+	http.Handler
 }
 
 func PlayerServerMaster(store PlayerStore) *PlayerServer {
-	p := &PlayerServer{
-		store,
-		http.NewServeMux(),
-	}
+	p := new(PlayerServer)
 
-	p.router.Handle("/league", http.HandlerFunc(p.leagueHandler))
-	p.router.Handle("/players/", http.HandlerFunc(p.playersHandler))
+	p.store = store
+	router := http.NewServeMux()
+
+	router.Handle("/league", http.HandlerFunc(p.leagueHandler))
+	router.Handle("/players/", http.HandlerFunc(p.playersHandler))
+
+	p.Handler = router
 
 	return p
-}
-
-func (p *PlayerServer) ServeHTTP(response http.ResponseWriter, request *http.Request) {
-	p.router.ServeHTTP(response, request)
 }
 
 func (p *PlayerServer) leagueHandler(response http.ResponseWriter, request *http.Request) {
