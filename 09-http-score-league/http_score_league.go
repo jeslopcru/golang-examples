@@ -1,9 +1,15 @@
 package http_score_league
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
+
+type Player struct {
+	Name  string
+	Score int
+}
 
 // PlayerStore stores score information about players
 type PlayerStore interface {
@@ -32,7 +38,14 @@ func PlayerServerMaster(store PlayerStore) *PlayerServer {
 }
 
 func (p *PlayerServer) leagueHandler(response http.ResponseWriter, request *http.Request) {
+	json.NewEncoder(response).Encode(p.obtainLeagueList())
 	response.WriteHeader(http.StatusOK)
+}
+
+func (p *PlayerServer) obtainLeagueList() []Player {
+	return []Player{
+		{"Paco", 20},
+	}
 }
 
 func (p *PlayerServer) playersHandler(response http.ResponseWriter, request *http.Request) {

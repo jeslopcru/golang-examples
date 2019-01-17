@@ -1,6 +1,7 @@
 package http_score_league
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -113,9 +114,13 @@ func TestLeague(t *testing.T) {
 	t.Run("it returns 200 on /league", func(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodGet, "/league", nil)
 		response := httptest.NewRecorder()
-
 		server.ServeHTTP(response, request)
 
+		var expected []Player
+		err := json.NewDecoder(response.Body).Decode(&expected)
+		if err != nil {
+			t.Fatalf("Unable to parse response from server '%s' into slice of Player, '%v'", response.Body, err)
+		}
 		assertStatus(t, response.Code, http.StatusOK)
 	})
 }
