@@ -10,3 +10,4 @@ Ejemplos de Go de la serie de post "Aprendiendo Go con TDD"
 7. [Crear una API con TDD en GO](https://jesuslc.com/2018/11/26/crear-una-api-con-tdd-en-go/)
 8. [Crear una API con TDD en GO parte 2](https://jesuslc.com/2018/12/16/crear-una-api-con-tdd-en-go-parte-2/)
 9. [Hacer test de integración a una API en Go](https://jesuslc.com/2018/12/26/hacer-test-de-integracion-a-una-api-en-go/)
+9. [Go y JSON](httos://jesuslc.com/2478)
