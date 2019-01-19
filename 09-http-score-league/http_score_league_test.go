@@ -124,7 +124,7 @@ func TestLeague(t *testing.T) {
 		store := StubPlayerStore{nil, nil, expectedLeague}
 		server := PlayerServerMaster(&store)
 
-		request := leagueRequest()
+		request := newGetLeagueRequest()
 		response := httptest.NewRecorder()
 
 		server.ServeHTTP(response, request)
@@ -133,7 +133,7 @@ func TestLeague(t *testing.T) {
 
 		assertStatus(t, response.Code, http.StatusOK)
 		assertContentType(response, t)
-		assertLeague(result, expectedLeague, t)
+		assertLeague(t, expectedLeague, result)
 	})
 }
 
@@ -143,7 +143,7 @@ func assertContentType(response *httptest.ResponseRecorder, t *testing.T) {
 	}
 }
 
-func assertLeague(result []Player, expectedLeague []Player, t *testing.T) {
+func assertLeague(t *testing.T, expectedLeague []Player, result []Player) {
 	if !reflect.DeepEqual(result, expectedLeague) {
 		t.Errorf("got %v want %v", result, expectedLeague)
 	}
@@ -159,7 +159,7 @@ func obtainLeagueFromResponse(t *testing.T, body io.Reader) (league []Player) {
 	return
 }
 
-func leagueRequest() *http.Request {
+func newGetLeagueRequest() *http.Request {
 	request, _ := http.NewRequest(http.MethodGet, "/league", nil)
 	return request
 }
